@@ -10,19 +10,29 @@ const Login = () => {
   const handleLogin = (e) => {
     e.preventDefault();
 
-    // 👉 Dummy check (replace with real API later)
-    if (email === "test@test.com" && password === "123456") {
-      toast.success("Login Successful 🎉");
-
-      // ✅ Store role in localStorage before navigating
-      localStorage.setItem("role", "admin"); // or "employee"/"manager"/"hr"
-
-      setTimeout(() => {
-        navigate("/dashboard"); // ✅ Redirect
-      }, 1500);
-    } else {
-      toast.error("Invalid credentials ❌");
+    // Basic validation
+    if (!email || !password) {
+      toast.error("Please enter both email and password");
+      return;
     }
+
+    // Simple email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      toast.error("Please enter a valid email address");
+      return;
+    }
+
+    // ✅ Always allow login for any valid email/password
+    toast.success("Login Successful 🎉");
+
+    // ✅ Store role in localStorage before navigating
+    // Default to admin role for demo purposes
+    localStorage.setItem("role", "admin");
+
+    setTimeout(() => {
+      navigate("/dashboard"); // ✅ Redirect
+    }, 1500);
   };
 
   return (
